@@ -7,6 +7,7 @@ var app = {
   "x": 0,
   "y": 0,
   "rulerLongerTickEvery": 6,
+  "allowParrallel": false,
 
   "rectStyle": 'fill:blue; stroke:black; stroke-width: 1;fill-opacity:0.1;',
   "textStyle": 'fill:black; font-family: helvetica; font-size: 10px;',
@@ -151,7 +152,10 @@ var app = {
     var ruler = '<line x1="0" y1="' + app.h + '" x2="' + app.containerWidth + '" y2="' + app.h + '" style="' + app.rulerLineStyle + '" />';
 
     for(var i = 0; i < app.containerWidth; i += app.lm)
-      ruler += '<line x1="' + i + '" y1="' + app.h + '" x2="' + i + '" y2="' + (i % (app.lm * app.rulerLongerTickEvery) == 0 ? 0 : app.h / 2) + '" style="' + app.rulerLineStyle + '" />';
+      ruler += '<line x1="' + i + '" y1="' + app.h + '" x2="' + i + '" y2="' + (i % (app.lm * app.rulerLongerTickEvery) == 0 ? 0 : app.h / 2) + '" style="' + app.rulerLineStyle + '" />' +
+      (i % (app.lm * app.rulerLongerTickEvery) == 0 ?
+        '<text x="' + (i + 2) + '" y="' + (app.h / 2) +
+        '" style="' + app.textStyle + '">' + (i / (app.lm * app.rulerLongerTickEvery)) + '</text>' : '');
 
     return '<svg width="' + app.containerWidth + '" height="' + app.containerHeight + '">' + ruler + html + '</svg>';
   },
